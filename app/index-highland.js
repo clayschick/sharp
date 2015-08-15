@@ -12,11 +12,12 @@ glob('img/*.jpg', function(er, files) {
 
    fileStreams
       .map(_.wrapCallback(fs.readFile))
-      .map(function(x){
-         _.log(fs.stat(x.toString()))
-         return x;
-      })
-      .each(_.log);
+      // .map(function(x){
+      //    _.log(fs.stat(x.toString()))
+      //    return x;
+      // })
+      .each(_.log)
+      .pipe(process.stdout);
 });
 
 function rename (file, cb) {
