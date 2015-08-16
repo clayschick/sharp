@@ -9,24 +9,25 @@ var options = require('./outputs');
 module.exports = function(){
    return through.obj(function(file, encoding, callback){
       var self = this;
-
       debug(options.outputs);
 
-      async.forEach(options.outputs, function(output, next){
-         var fileStream = new File({
-            path: file.path,
-            base: file.base,
-            cwd: file.cwd,
-            contents: fs.createReadStream(file.path)
-         });
-         var ext = '-' + output.width + 'x' + output.height + '.' + output.format;
-         fileStream.extname = ext;
+      async.each(options.outputs, function(output, next){
+         async.each(output.formats, function (format, next) {
+            var fileStream = new File({
+               path: file.path,
+               base: file.base,
+               cwd: file.cwd,
+               contents: fs.createReadStream(file.path)
+            });
 
-         debug(fileStream.inspect());
+            output.format = format;
+            fileStream.options = output;
+            debug(fileStream.options);
 
-         self.push(fileStream);
+            self.push(fileStream);
+            next();
+         })
          next();
-
       }, callback)
    })
 };
