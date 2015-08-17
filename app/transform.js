@@ -1,4 +1,5 @@
 var debug = require('debug')('transform');
+
 var buildPipeline = require('./pipelineFactory');
 
 module.exports = function(image, next) {
@@ -14,7 +15,7 @@ module.exports = function(image, next) {
             next(err);
          })
          .on('data', function(data) {
-            console.log("received data");
+            debug("received data");
             image.contents = data;
             next(null, image);
          }));

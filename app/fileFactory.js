@@ -1,12 +1,12 @@
+var debug = require('debug')('fileFactory');
+
 var File = require('vinyl');
 var fs = require('fs');
 var through = require('through2');
 var async = require('async');
-var debug = require('debug')('fileFactory');
 
-var options = require('./outputs');
-
-module.exports = function(){
+module.exports = function(opt){
+   var options = require(opt);
    return through.obj(function(file, encoding, callback){
       var self = this;
       debug(options.outputs);
