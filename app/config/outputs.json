@@ -1,0 +1,25 @@
+{
+   "outputs": [{
+      "name": "large-crop-north",
+      "resize": {
+         "width": 1600,
+         "height": 750
+      },
+      "crop": "north",
+      "formats": ["webp", "jpeg"]
+   }, {
+      "name": "medium",
+      "resize": {
+         "width": 1200,
+         "height": 550
+      },
+      "formats": ["webp", "jpeg"]
+   }, {
+      "name": "small",
+      "resize": {
+         "width": 800,
+         "height": 350
+      },
+      "formats": ["webp", "jpeg"]
+   }]
+}

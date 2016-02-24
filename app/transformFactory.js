@@ -1,49 +1,31 @@
+var debug = require('debug')('transformFactory');
+
 var sharp = require('sharp');
-var File = require('vinyl');
 
 module.exports = {
-   formatWebp: function formatWebp(image, next) {
-      console.log(image.path);
-
-      var webp = new File(image);
-      webp.contents = image.contents;
-      webp.extname = '.webp';
-
-      console.log(webp.path);
-
-      webp
-         .pipe(sharp()
-            .webp()
-            .resize(1600, 750)
-            .on('err', function(err) {
-               console.log(err);
-               next(err);
-            })
-            .on('data', function(data) {
-               webp.contents = data;
-               next(null, webp);
-            }));
+   resize: function(pipeline, dimensions) {
+      debug("resize: " + JSON.stringify(dimensions))
+      return pipeline.resize(dimensions.width, dimensions.height)
    },
-   formatJpeg: function(image, next){
-      console.log(image.path);
-
-      var jpeg = new File(image);
-      jpeg.contents = image.contents;
-      jpeg.extname = '.jpeg';
-
-      console.log(jpeg.path);
-
-      jpeg
-         .pipe(sharp()
-            .jpeg()
-            .resize(1600, 750)
-            .on('err', function(err) {
-               console.log(err);
-               next(err);
-            })
-            .on('data', function(data) {
-               jpeg.contents = data;
-               next(null, jpeg);
-            }));
+   crop: function(pipeline, gravity) {
+      debug("crop: " + JSON.stringify(sharp.gravity[gravity]))
+      return pipeline.crop(sharp.gravity[gravity])
+   },
+   quality: function (pipeline, quality) {
+      if(quality === 80) debug("default quality value is 80")
+      debug("quality: " + quality)
+      return pipeline.quality(quality)
+   },
+   format: function(pipeline, format){
+      debug("format: " + JSON.stringify(sharp.format[format]))
+      return pipeline.toFormat(sharp.format[format])
+   },
+   progressive: function(pipeline){
+      debug("progressive scan: true")
+      return pipeline.progressive()
+   },
+   tile: function(pipeline, tile){
+      debug("tile: " + JSON.stringify(tile))
+      return pipeline.tile(tile.size, tile.overlap)
    }
 }

@@ -1,0 +1,12 @@
+{
+   "outputs": [{
+      "name": "mobile-crop",
+      "resize": {
+         "width": 800,
+         "height": 450
+      },
+      "crop": "north",
+      "quality": 70,
+      "formats": ["jpeg"]
+   }]
+}
