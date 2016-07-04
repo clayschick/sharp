@@ -6,6 +6,6 @@ WORKDIR opt/
 RUN apt-get update
 
 RUN apt-get install -y curl build-essential \
-	&& curl --silent --location https://deb.nodesource.com/setup_0.12 | bash - \
+	&& curl --silent --location https://deb.nodesource.com/setup_4.x | bash - \
 	&& apt-get install -y nodejs nano \
-	&& npm install sharp
+	&& npm install -g sharp

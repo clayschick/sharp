@@ -1,0 +1,7 @@
+version: '2'
+services:
+  sharp:
+    build:
+      context: .
+    volumes:
+      - $PWD/app:/app
